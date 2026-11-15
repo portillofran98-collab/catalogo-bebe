@@ -4,7 +4,7 @@ Catálogo web de una tienda de ropa para bebé. Los clientes eligen productos y 
 
 Proyecto del caso de estudio de **Vibe Coding** con Next.js, desarrollado con IA como copiloto. El proceso está documentado en [VIBE_CODING.md](./VIBE_CODING.md).
 
-🔗 **Sitio en producción:** _pendiente (URL de Vercel)_
+🔗 https://catalogo-bebe.vercel.app
 
 ## Tecnologías
 
