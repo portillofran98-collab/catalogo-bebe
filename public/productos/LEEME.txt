@@ -1,0 +1,13 @@
+Pon aquí las fotos de los productos con estos nombres exactos (.jpg):
+
+set-5-bodys-manga-corta.jpg
+set-5-baberos.jpg
+body-mi-primera-navidad.jpg
+set-5-piezas-recien-nacido-rayado.jpg
+set-4-estaciones.jpg
+mameluco-manga-larga.jpg
+calcetines-20-pares.jpg
+set-27-lazos-diademas.jpg
+
+Si una foto es .png, cambia la extensión en lib/productos.ts.
+Mientras no exista la foto, el sitio muestra un icono 🧸 en su lugar.
