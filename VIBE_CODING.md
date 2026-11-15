@@ -14,7 +14,7 @@ Cada iteración registra: el prompt, lo que generó la IA, lo que corregí o rev
 - Tema: catálogo de una tienda real de ropa para bebé.
 - Datos locales en `lib/productos.ts` expuestos mediante un Route Handler, en lugar de una base de datos, porque son pocos productos.
 
-✏️ _Por qué elegí este tema:_
+✏️ **Por qué elegí este tema:** un catálogo de ropa de bebé para una tienda que vende por Instagram es un caso real, y permite cubrir todos los requisitos (rutas, API, estado, carga/error) sin una base de datos compleja.
 
 ## Iteración 1: creación del proyecto
 
@@ -48,12 +48,28 @@ Cada iteración registra: el prompt, lo que generó la IA, lo que corregí o rev
 - El carrito usa `useSyncExternalStore` sobre `localStorage` para evitar errores de hidratación.
 - Instagram no permite pre-llenar mensajes, así que el botón copia el pedido y abre el chat (`ig.me/m/usuario`).
 
-**Revisión:** ✏️ _errores que encontré al probarlo y cómo los resolví:_
+**Revisión:** **Revisión y errores al probarlo:**
+- Al abrir la app seguía apareciendo la página por defecto de Next.js: los archivos generados no se habían copiado al proyecto. Lo comprobé con `dir app` y `dir lib` (no existía `lib`) y los extraje con `Expand-Archive` dentro de la carpeta correcta.
+- Escribí `NEXT_PUBLIC_INSTAGRAM_USER=...` como si fuera un comando de PowerShell y dio error. Es el contenido del archivo `.env.local`, que creé con `Set-Content`.
+- Entendí que `.env.example` quedaba ignorado por el `.gitignore` de Next (`.env*`), y agregué la excepción `!.env.example`.
 
 ## Iteración 4: despliegue
 
-✏️ _Pasos en Vercel, variables de entorno y problemas encontrados:_
+**Antes de desplegar:** corrí `npm run build` en local para detectar errores del build de producción. Terminó bien y listó las rutas, incluidas las páginas `/catalogo/[id]` prerenderizadas.
+
+**Git y GitHub:**
+- Ejecuté comandos de git fuera de la carpeta del proyecto y dio "not a git repository"; el comando correcto se ejecuta dentro de `catalogo-bebe`.
+- Pegué dos comandos en la misma línea y el commit no se hizo; los ejecuté uno por uno.
+- Usé la URL con el marcador `TU_USUARIO` en vez de mi usuario real y GitHub respondió "Repository not found"; la corregí con `git remote set-url`.
+- Un `git push` fue rechazado porque había editado el README en GitHub; lo resolví con `git pull` (fast-forward).
+- Los avisos "LF will be replaced by CRLF" son normales en Windows y no afectan.
+
+**Vercel:** importé el repositorio desde GitHub, agregué las variables `NEXT_PUBLIC_INSTAGRAM_USER` y `NEXT_PUBLIC_SITE_URL` y desplegué. El primer deploy tardó 44 segundos y funcionó sin errores. URL: https://catalogo-bebe.vercel.app
 
 ## Reflexión
 
-✏️ _Qué funcionó bien con la IA, qué tuve que corregir yo y qué haría distinto:_
+**Qué funcionó bien:** la IA generó rápido la estructura del proyecto (rutas, Route Handler, componentes, loading/error UI y documentación) y señaló un detalle de Next 16 (Cache Components) que habría causado un error con `new Date()` en el footer.
+
+**Qué tuve que corregir yo:** casi todos los problemas fueron del entorno (políticas de PowerShell, rutas de carpeta, comandos de git, variables de entorno), no del código generado. Aprendí que hay que leer los mensajes de error y verificar en qué carpeta se ejecuta cada comando.
+
+**Qué haría distinto:** hacer commits más pequeños desde el inicio, probar `npm run build` antes de cada despliegue y agregar las fotos y los precios reales de los productos.
